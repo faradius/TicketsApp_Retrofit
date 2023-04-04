@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.developerscracks.ticketsappretrofit.databinding.TicketItemLayoutBinding
 import com.developerscracks.ticketsappretrofit.ui.mapper.TicketItemUI
 
-class TicketsAdapter(): ListAdapter<TicketItemUI, TicketsAdapter.TicketViewHolder>(TicketDiffUtil){
+class TicketsAdapter(private val onClick: (Int) -> Unit): ListAdapter<TicketItemUI, TicketsAdapter.TicketViewHolder>(TicketDiffUtil){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketViewHolder {
         return TicketViewHolder(TicketItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -31,7 +31,11 @@ class TicketsAdapter(): ListAdapter<TicketItemUI, TicketsAdapter.TicketViewHolde
         private var currentTicket: TicketItemUI? = null
 
         init {
-            currentTicket
+            itemView.setOnClickListener {
+                currentTicket?.let {
+                    onClick(it.id)
+                }
+            }
         }
 
         fun bind(ticket: TicketItemUI){

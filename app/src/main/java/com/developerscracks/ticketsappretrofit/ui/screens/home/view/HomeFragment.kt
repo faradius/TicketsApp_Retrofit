@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.developerscracks.ticketsappretrofit.R
 import com.developerscracks.ticketsappretrofit.core.hide
@@ -24,7 +25,12 @@ class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels()
 
-    private val ticketsAdapter: TicketsAdapter = TicketsAdapter()
+    private val ticketsAdapter: TicketsAdapter = TicketsAdapter(
+        onClick = {selectedTicket ->
+            val action = HomeFragmentDirections.actionHomeFragmentToTicketDetailFragment(selectedTicket)
+            findNavController().navigate(action)
+        }
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

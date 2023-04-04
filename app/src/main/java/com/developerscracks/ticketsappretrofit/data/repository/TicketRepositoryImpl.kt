@@ -18,4 +18,14 @@ class TicketRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override suspend fun getTicketById(id: Int): Ticket {
+        return when (val response = networkDatasource.getTicketById(id)){
+            is ApiResponse.ApiEmptyResponse -> throw NotImplementedError("The response is empty")
+            is ApiResponse.ApiError -> throw NotImplementedError("The server responded with an error: ${response.errorMessage}")
+            is ApiResponse.ApiSuccessResponse -> {
+                response.body.toDomain()
+            }
+        }
+    }
 }

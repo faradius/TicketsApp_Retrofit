@@ -5,4 +5,5 @@ import com.developerscracks.ticketsappretrofit.domain.entities.Ticket
 
 interface TicketRepository {
     suspend fun getAllTickets(): List<Ticket>
+    suspend fun getTicketById(id: Int): Ticket
 }

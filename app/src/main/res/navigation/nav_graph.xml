@@ -8,6 +8,19 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.developerscracks.ticketsappretrofit.ui.screens.home.view.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        android:label="Lista de Tickets"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_ticketDetailFragment"
+            app:destination="@id/ticketDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ticketDetailFragment"
+        android:name="com.developerscracks.ticketsappretrofit.ui.screens.ticketdetail.view.TicketDetailFragment"
+        android:label="Detalle del Ticket"
+        tools:layout="@layout/fragment_ticket_detail" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
 </navigation>
