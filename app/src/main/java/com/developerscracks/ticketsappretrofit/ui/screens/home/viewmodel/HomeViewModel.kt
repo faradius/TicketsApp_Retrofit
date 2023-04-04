@@ -16,18 +16,22 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val ticketUseCases: TicketUseCases): ViewModel() {
 
-    private val _tickets: MutableLiveData<List<TicketItemUI>> = MutableLiveData()
-    val tickets: LiveData<List<TicketItemUI>> = _tickets
+    private val _tickets: MutableLiveData<TicketResult<List<TicketItemUI>>> = MutableLiveData()
+    val tickets: LiveData<TicketResult<List<TicketItemUI>>> = _tickets
 
     fun getAllTickets(){
         viewModelScope.launch {
             val result = ticketUseCases.getAllTicketsUseCase(Unit)
             when(result){
+                is TicketResult.Loading ->{
+                    _tickets.value = TicketResult.Loading()
+                }
                 is TicketResult.Success ->{
-                    _tickets.value = result.data.map { it.toTicketItemUI() }
+                    val tickets = result.data.map { it.toTicketItemUI() }
+                    _tickets.value = TicketResult.Success(tickets)
                 }
                 is TicketResult.Error ->{
-                    Log.e("ERROR", result.error.message ?: "Error desconocido")
+                    _tickets.value = TicketResult.Error(result.error)
                 }
             }
         }
