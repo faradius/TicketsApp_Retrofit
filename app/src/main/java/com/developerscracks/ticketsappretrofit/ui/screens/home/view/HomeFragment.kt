@@ -55,7 +55,7 @@ class HomeFragment : Fragment() {
                 }
 
                 is TicketResult.Error -> {
-                    binding.progressBar.hide()
+                    binding.progressBar.show()
                     Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT).show()
                 }
             }
