@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val ticketUseCases: TicketUseCases): ViewModel() {
 
-    private val _tickets: MutableLiveData<TicketResult<List<TicketItemUI>>> = MutableLiveData()
+    private val _tickets: MutableLiveData<TicketResult<List<TicketItemUI>>> = MutableLiveData(TicketResult.Loading())
     val tickets: LiveData<TicketResult<List<TicketItemUI>>> = _tickets
 
     fun getAllTickets(){
