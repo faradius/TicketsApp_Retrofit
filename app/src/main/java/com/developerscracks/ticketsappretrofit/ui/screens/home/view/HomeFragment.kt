@@ -9,10 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.developerscracks.ticketsappretrofit.R
 import com.developerscracks.ticketsappretrofit.core.hide
 import com.developerscracks.ticketsappretrofit.core.show
-import com.developerscracks.ticketsappretrofit.data.utils.TicketResult
 import com.developerscracks.ticketsappretrofit.databinding.FragmentHomeBinding
 import com.developerscracks.ticketsappretrofit.ui.screens.home.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,30 +42,41 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getAllTickets()
 
+        setupRecyclerView()
+        showStatusProgressBar()
+        showInfoRecyclerView()
+        showMessageIsError()
+
+    }
+
+    private fun showMessageIsError(){
+        viewModel.error.observe(viewLifecycleOwner){errorMessage ->
+            Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun showInfoRecyclerView(){
+        viewModel.tickets.observe(viewLifecycleOwner){ tickets ->
+            ticketsAdapter.submitList(tickets)
+        }
+    }
+
+    private fun showStatusProgressBar(){
+        viewModel.loading.observe(viewLifecycleOwner){ status->
+            if (status)binding.progressBar.show() else binding.progressBar.hide()
+        }
+    }
+    private fun setupRecyclerView(){
         binding.rvTickets.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = ticketsAdapter
         }
-
-        viewModel.tickets.observe(viewLifecycleOwner){ result ->
-            when(result){
-                is TicketResult.Loading ->{
-                    binding.progressBar.show()
-                }
-
-                is TicketResult.Success ->{
-                    binding.progressBar.hide()
-                    ticketsAdapter.submitList(result.data)
-                }
-
-                is TicketResult.Error -> {
-                    binding.progressBar.show()
-                    Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllTickets()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

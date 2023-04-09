@@ -1,6 +1,5 @@
 package com.developerscracks.ticketsappretrofit.domain.utils
 
-import com.developerscracks.ticketsappretrofit.data.utils.TicketResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 

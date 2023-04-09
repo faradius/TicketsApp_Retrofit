@@ -1,7 +1,6 @@
 package com.developerscracks.ticketsappretrofit.ui.screens.ticketdetail.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.developerscracks.ticketsappretrofit.R
 import com.developerscracks.ticketsappretrofit.core.hide
 import com.developerscracks.ticketsappretrofit.core.show
-import com.developerscracks.ticketsappretrofit.data.utils.TicketResult
 import com.developerscracks.ticketsappretrofit.databinding.FragmentTicketDetailBinding
 import com.developerscracks.ticketsappretrofit.ui.screens.ticketdetail.viewmodel.TicketDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,6 +24,11 @@ class TicketDetailFragment : Fragment() {
 
     private val viewModel: TicketDetailViewModel by viewModels()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.getTicketDetail(args.id)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,44 +39,45 @@ class TicketDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getTicketDetail(args.id)
+        showStatusProgressBar()
+        showInfoDetailTicket()
+        showMessageIsError()
+    }
 
-        viewModel.ticketDetail.observe(viewLifecycleOwner) { ticket ->
-            when (ticket) {
-                is TicketResult.Loading -> {
-                    binding.progressBar.show()
-                    binding.containerTicketDetail.hide()
-                }
+    private fun showMessageIsError() {
+        viewModel.error.observe(viewLifecycleOwner){ errorMessage ->
+            Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+        }
+    }
 
-                is TicketResult.Success -> {
-                    binding.apply {
-                        progressBar.hide()
-                        containerTicketDetail.show()
-
-                        tvTitleTicket.text = ticket.data.title
-                        tvNumTicket.text = ticket.data.number
-                        tvIdTicket.text = "${ticket.data.id}"
-                        tvDateTicket.text = ticket.data.date
-                        tvNamePersonInChargeTicket.text = ticket.data.person
-                        tvResponsibleTeam.text = ticket.data.team
-                        tvincidentTypeTicket.text = ticket.data.incident
-                        tvSeverityIncident.text = ticket.data.severity
-                        tvVersionSoftware.text = ticket.data.version
-                        tvDescriptionProblem.text = ticket.data.description
-                    }
-                }
-
-                is TicketResult.Error -> {
-                    binding.progressBar.show()
-                    binding.containerTicketDetail.hide()
-                    Toast.makeText(requireContext(), ticket.error.message, Toast.LENGTH_SHORT)
-                        .show()
-                }
-                else -> {}
+    private fun showStatusProgressBar() {
+        viewModel.loading.observe(viewLifecycleOwner){ status->
+            if (status){
+                binding.progressBar.show()
+                binding.containerTicketDetail.hide()
+            } else {
+                binding.progressBar.hide()
+                binding.containerTicketDetail.show()
             }
         }
     }
 
+    private fun showInfoDetailTicket(){
+        viewModel.ticketDetail.observe(viewLifecycleOwner){ticket->
+            binding.apply {
+                tvTitleTicket.text = ticket.title
+                tvNumTicket.text = ticket.number
+                tvIdTicket.text = "${ticket.id}"
+                tvDateTicket.text = ticket.date
+                tvNamePersonInChargeTicket.text = ticket.person
+                tvResponsibleTeam.text = ticket.team
+                tvincidentTypeTicket.text = ticket.incident
+                tvSeverityIncident.text = ticket.severity
+                tvVersionSoftware.text = ticket.version
+                tvDescriptionProblem.text = ticket.description
+            }
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
