@@ -1,6 +1,7 @@
 package com.developerscracks.ticketsappretrofit.di
 
 import com.developerscracks.ticketsappretrofit.data.repository.TicketRepository
+import com.developerscracks.ticketsappretrofit.domain.usecases.CreateTicketUseCase
 import com.developerscracks.ticketsappretrofit.domain.usecases.GetAllTicketsUseCase
 import com.developerscracks.ticketsappretrofit.domain.usecases.GetTicketByIdUseCase
 import com.developerscracks.ticketsappretrofit.domain.usecases.TicketUseCases
@@ -17,6 +18,7 @@ class UseCasesModule {
     @Provides
     fun providesTicketUseCases(repository: TicketRepository, @IoDispatcher dispatcher: CoroutineDispatcher) = TicketUseCases(
         getAllTicketsUseCase = GetAllTicketsUseCase(repository, dispatcher),
-        getTicketByIdUseCase = GetTicketByIdUseCase(repository, dispatcher)
+        getTicketByIdUseCase = GetTicketByIdUseCase(repository, dispatcher),
+        createTicketUseCase = CreateTicketUseCase(repository, dispatcher)
     )
 }

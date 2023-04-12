@@ -6,4 +6,5 @@ object Config {
 
     const val GET_ALL_TICKETS = "Ticket"
     const val GET_TICKET_BY_ID = "Ticket/{idTicket}"
+    const val CREATE_NEW_TICKET = "Ticket"
 }

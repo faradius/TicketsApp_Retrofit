@@ -1,4 +1,4 @@
-package com.developerscracks.ticketsappretrofit.ui.screens.ticketdetail.view
+package com.developerscracks.ticketsappretrofit.ui.screens.detailticket.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,7 +11,7 @@ import androidx.navigation.fragment.navArgs
 import com.developerscracks.ticketsappretrofit.core.hide
 import com.developerscracks.ticketsappretrofit.core.show
 import com.developerscracks.ticketsappretrofit.databinding.FragmentTicketDetailBinding
-import com.developerscracks.ticketsappretrofit.ui.screens.ticketdetail.viewmodel.TicketDetailViewModel
+import com.developerscracks.ticketsappretrofit.ui.screens.detailticket.viewmodel.TicketDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

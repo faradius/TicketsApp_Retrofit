@@ -3,9 +3,10 @@ package com.developerscracks.ticketsappretrofit.data.network.model
 import com.developerscracks.ticketsappretrofit.domain.entities.Ticket
 import com.google.gson.annotations.SerializedName
 import java.util.*
+import kotlin.random.Random
 
 data class TicketDTO(
-    @SerializedName("idTicket") val id: String,
+    @SerializedName("idTicket") val id: String?,
     @SerializedName("numTicket") val number: String,
     @SerializedName("titleTicket") val title: String,
     @SerializedName("dateTicket") val date: String,
@@ -23,7 +24,7 @@ data class TicketDTO(
 
 fun TicketDTO.toDomain(): Ticket{
     return Ticket(
-        id = id.toInt(),
+        id = id?.toInt() ?: 0,
         number = number,
         title = title,
         date = date,
@@ -34,5 +35,24 @@ fun TicketDTO.toDomain(): Ticket{
         severity = severity,
         version = version,
         description = description
+    )
+}
+
+fun Ticket.toTicketDTO(): TicketDTO{
+    return TicketDTO(
+        id = id.toString(),
+        number = number,
+        title = title,
+        date = date,
+        status = status,
+        person = person,
+        team = team,
+        incident = incident,
+        severity = severity,
+        version = version,
+        description = description,
+        image1 = "",
+        image2 = "",
+        image3 = ""
     )
 }

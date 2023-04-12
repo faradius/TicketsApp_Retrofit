@@ -2,4 +2,22 @@
     <string name="app_name">Tickets</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string-array name="responsible_team">
+        <item>Soporte</item>
+        <item>Desarrollo</item>
+        <item>Atención a clientes</item>
+    </string-array>
+
+    <string-array name="incident_type">
+        <item>Bug</item>
+        <item>Feature</item>
+    </string-array>
+
+    <string-array name="severity_incident">
+        <item>Hig</item>
+        <item>Medium</item>
+        <item>Low</item>
+    </string-array>
 </resources>

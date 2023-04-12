@@ -1,4 +1,4 @@
-package com.developerscracks.ticketsappretrofit.ui.screens.ticketdetail.viewmodel
+package com.developerscracks.ticketsappretrofit.ui.screens.detailticket.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

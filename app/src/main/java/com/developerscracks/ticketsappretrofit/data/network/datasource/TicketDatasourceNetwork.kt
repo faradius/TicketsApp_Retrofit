@@ -6,4 +6,5 @@ import com.developerscracks.ticketsappretrofit.data.utils.ApiResponse
 interface TicketDatasourceNetwork {
     suspend fun getAllTickets():ApiResponse<List<TicketDTO>>
     suspend fun getTicketById(id: Int):ApiResponse<TicketDTO>
+    suspend fun createTicket(ticket: TicketDTO): ApiResponse<TicketDTO>
 }

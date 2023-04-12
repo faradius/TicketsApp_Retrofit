@@ -13,14 +13,22 @@
         <action
             android:id="@+id/action_homeFragment_to_ticketDetailFragment"
             app:destination="@id/ticketDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_createTicketFragment"
+            app:destination="@id/createTicketFragment" />
     </fragment>
     <fragment
         android:id="@+id/ticketDetailFragment"
-        android:name="com.developerscracks.ticketsappretrofit.ui.screens.ticketdetail.view.TicketDetailFragment"
+        android:name="com.developerscracks.ticketsappretrofit.ui.screens.detailticket.view.TicketDetailFragment"
         android:label="Detalle del Ticket"
         tools:layout="@layout/fragment_ticket_detail" >
         <argument
             android:name="id"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/createTicketFragment"
+        android:name="com.developerscracks.ticketsappretrofit.ui.screens.createticket.view.CreateTicketFragment"
+        android:label="Nuevo Ticket"
+        tools:layout="@layout/fragment_create_ticket" />
 </navigation>

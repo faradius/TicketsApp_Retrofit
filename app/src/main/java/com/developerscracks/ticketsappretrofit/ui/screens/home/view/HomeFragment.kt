@@ -47,6 +47,11 @@ class HomeFragment : Fragment() {
         showInfoRecyclerView()
         showMessageIsError()
 
+        binding.fabCreateTicket.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToCreateTicketFragment()
+            findNavController().navigate(action)
+        }
+
     }
 
     private fun showMessageIsError(){

@@ -20,4 +20,10 @@ class TicketDatasourceNetworkImpl @Inject constructor(private val api: ApiServic
             api.getTicketById(id).handleResponse()
         }
     }
+
+    override suspend fun createTicket(ticket: TicketDTO): ApiResponse<TicketDTO> {
+        return withContext(Dispatchers.IO){
+            api.createNewTicket(ticket).handleResponse()
+        }
+    }
 }
