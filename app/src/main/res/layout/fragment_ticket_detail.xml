@@ -21,15 +21,6 @@
             app:layout_constraintTop_toTopOf="@+id/textView14" />
 
         <TextView
-            android:id="@+id/tvIdTicket"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            tools:text="TCK-001"
-            app:layout_constraintStart_toEndOf="@+id/textView15"
-            app:layout_constraintTop_toTopOf="@+id/textView15" />
-
-        <TextView
             android:id="@+id/tvTitleTicket"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -118,15 +109,6 @@
             app:layout_constraintTop_toBottomOf="@+id/tvTitleTicket" />
 
         <TextView
-            android:id="@+id/textView15"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:text="Id del Ticket:"
-            app:layout_constraintStart_toEndOf="@+id/tvNumTicket"
-            app:layout_constraintTop_toTopOf="@+id/tvNumTicket" />
-
-        <TextView
             android:id="@+id/textView16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -144,7 +126,7 @@
             android:layout_marginTop="8dp"
             android:text="Nombre del Responsable"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView25" />
+            app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
         <TextView
             android:id="@+id/textView19"
@@ -193,25 +175,6 @@
             android:text="Descipción:"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView22" />
-
-        <TextView
-            android:id="@+id/textView25"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="Nombre del Cliente:"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView16" />
-
-        <TextView
-            android:id="@+id/tvNameClient"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="Alejandro Espinoza"
-            app:layout_constraintStart_toEndOf="@+id/textView25"
-            app:layout_constraintTop_toTopOf="@+id/textView25" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

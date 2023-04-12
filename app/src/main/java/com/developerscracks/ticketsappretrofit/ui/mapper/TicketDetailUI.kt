@@ -1,25 +1,11 @@
 package com.developerscracks.ticketsappretrofit.ui.mapper
 
 import com.developerscracks.ticketsappretrofit.domain.entities.Ticket
+import com.developerscracks.ticketsappretrofit.ui.model.TicketDetailUI
 
-data class TicketDetailUI(
-    val id: Int,
-    val number: String,
-    val title: String,
-    val date: String,
-    val status: String,
-    val person: String,
-    val team: String,
-    val incident: String,
-    val severity: String,
-    val version: String,
-    val description: String
-)
-
-fun Ticket.toTicketDetailUI(): TicketDetailUI{
+fun Ticket.toTicketDetailUI(): TicketDetailUI {
     return TicketDetailUI(
         id = id,
-        number = number,
         title = title,
         date = date,
         status = status,

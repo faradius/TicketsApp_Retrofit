@@ -66,8 +66,7 @@ class TicketDetailFragment : Fragment() {
         viewModel.ticketDetail.observe(viewLifecycleOwner){ticket->
             binding.apply {
                 tvTitleTicket.text = ticket.title
-                tvNumTicket.text = ticket.number
-                tvIdTicket.text = "${ticket.id}"
+                tvNumTicket.text = "${ticket.id}"
                 tvDateTicket.text = ticket.date
                 tvNamePersonInChargeTicket.text = ticket.person
                 tvResponsibleTeam.text = ticket.team

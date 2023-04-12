@@ -1,10 +1,6 @@
-package com.developerscracks.ticketsappretrofit.domain.entities
+package com.developerscracks.ticketsappretrofit.ui.model
 
-import com.google.gson.annotations.SerializedName
-import java.util.Date
-
-data class Ticket(
-    val id: Int?,
+data class TicketUI(
     val title: String,
     val date: String,
     val status: String,

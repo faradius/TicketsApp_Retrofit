@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.developerscracks.ticketsappretrofit.databinding.TicketItemLayoutBinding
-import com.developerscracks.ticketsappretrofit.ui.mapper.TicketItemUI
+import com.developerscracks.ticketsappretrofit.ui.model.TicketItemUI
 
 class TicketsAdapter(private val onClick: (Int) -> Unit): ListAdapter<TicketItemUI, TicketsAdapter.TicketViewHolder>(TicketDiffUtil){
 
@@ -33,7 +33,7 @@ class TicketsAdapter(private val onClick: (Int) -> Unit): ListAdapter<TicketItem
         init {
             itemView.setOnClickListener {
                 currentTicket?.let {
-                    onClick(it.id)
+                    onClick(it.id!!)
                 }
             }
         }
@@ -41,7 +41,7 @@ class TicketsAdapter(private val onClick: (Int) -> Unit): ListAdapter<TicketItem
         fun bind(ticket: TicketItemUI){
             currentTicket = ticket
 
-            number.text = ticket.number
+            number.text = ticket.id.toString()
             title.text = ticket.title
             severity.text = ticket.severity
             incident.text = ticket.incident

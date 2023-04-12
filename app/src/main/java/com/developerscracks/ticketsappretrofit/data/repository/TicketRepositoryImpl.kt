@@ -1,8 +1,8 @@
 package com.developerscracks.ticketsappretrofit.data.repository
 
+import com.developerscracks.ticketsappretrofit.data.mapper.dto.toDomain
+import com.developerscracks.ticketsappretrofit.data.mapper.dto.toTicketDTO
 import com.developerscracks.ticketsappretrofit.data.network.datasource.TicketDatasourceNetwork
-import com.developerscracks.ticketsappretrofit.data.network.model.TicketDTO
-import com.developerscracks.ticketsappretrofit.data.network.model.toDomain
 import com.developerscracks.ticketsappretrofit.data.utils.ApiResponse
 import com.developerscracks.ticketsappretrofit.domain.entities.Ticket
 import javax.inject.Inject
@@ -30,8 +30,8 @@ class TicketRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun createTicket(ticket: TicketDTO): Ticket {
-        return when (val response = networkDatasource.createTicket(ticket)){
+    override suspend fun createTicket(ticket: Ticket): Ticket {
+        return when (val response = networkDatasource.createTicket(ticket.toTicketDTO())){
             is ApiResponse.ApiEmptyResponse -> throw NotImplementedError("The response is empty")
             is ApiResponse.ApiError -> throw NotImplementedError("The server responded with an error: ${response.errorMessage}")
             is ApiResponse.ApiSuccessResponse -> {

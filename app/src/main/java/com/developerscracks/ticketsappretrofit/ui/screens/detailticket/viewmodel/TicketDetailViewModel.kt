@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.developerscracks.ticketsappretrofit.domain.utils.TicketResult
 import com.developerscracks.ticketsappretrofit.domain.usecases.TicketUseCases
-import com.developerscracks.ticketsappretrofit.ui.mapper.TicketDetailUI
 import com.developerscracks.ticketsappretrofit.ui.mapper.toTicketDetailUI
+import com.developerscracks.ticketsappretrofit.ui.model.TicketDetailUI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

@@ -9,8 +9,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.developerscracks.ticketsappretrofit.R
+import com.developerscracks.ticketsappretrofit.core.hide
+import com.developerscracks.ticketsappretrofit.core.show
 import com.developerscracks.ticketsappretrofit.databinding.FragmentCreateTicketBinding
 import com.developerscracks.ticketsappretrofit.ui.screens.createticket.viewmodel.CreateTicketViewModel
+import com.developerscracks.ticketsappretrofit.ui.utils.Constants.TICKET_CREATE_SUCCESFULL
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,22 +45,36 @@ class CreateTicketFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupSpinners()
+        setItemSpinners()
+        showStatusProgressBar()
+        createTicket()
+        isTicketCreated()
 
-        binding.autResponsibibleTeam.setOnItemClickListener { parent, view, position, id ->
-            team = parent.getItemAtPosition(position).toString()
-            Toast.makeText(requireContext(), "Item: $team", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun isTicketCreated(){
+        viewModel.ticket.observe(viewLifecycleOwner){ ticket ->
+            if (ticket != null){
+                Toast.makeText(requireContext(), TICKET_CREATE_SUCCESFULL, Toast.LENGTH_SHORT).show()
+
+                binding.apply {
+                    etTitleTicketInput.setText("")
+                    etNameInChargeInput.setText("")
+                    spinnerResponsibleTeam.editText?.setText("")
+                    spinnerIncidentType.editText?.setText("")
+                    spinnerSeverityIncident.editText?.setText("")
+                    etVersionSoftwareInput.setText("")
+                    etDescriptionProblemInput.setText("")
+                }
+            }else{
+                viewModel.error.observe(viewLifecycleOwner){error ->
+                    Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+                }
+            }
         }
+    }
 
-        binding.autncidentType.setOnItemClickListener { parent, view, position, id ->
-            incident = parent.getItemAtPosition(position).toString()
-            Toast.makeText(requireContext(), "Item: $incident", Toast.LENGTH_SHORT).show()
-        }
-
-        binding.autSeverityIncident.setOnItemClickListener { parent, view, position, id ->
-            severity = parent.getItemAtPosition(position).toString()
-            Toast.makeText(requireContext(), "Item: $severity", Toast.LENGTH_SHORT).show()
-        }
-
+    private fun createTicket(){
         binding.btnCreateTicket.setOnClickListener {
             title = binding.etTitleTicketInput.text.toString()
             name = binding.etNameInChargeInput.text.toString()
@@ -66,20 +83,20 @@ class CreateTicketFragment: Fragment() {
 
             viewModel.createNewTicket(title,name,team,incident,severity,version,description)
         }
-
-        viewModel.ticket.observe(viewLifecycleOwner){
-            if (it != null){
-                Toast.makeText(requireContext(), "Registro Exitoso", Toast.LENGTH_SHORT).show()
-            }else{
-                Toast.makeText(requireContext(), "Hubo un Error", Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 
+    private fun setItemSpinners(){
+        binding.autResponsibibleTeam.setOnItemClickListener { parent, view, position, id ->
+            team = parent.getItemAtPosition(position).toString()
+        }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        binding.autncidentType.setOnItemClickListener { parent, view, position, id ->
+            incident = parent.getItemAtPosition(position).toString()
+        }
+
+        binding.autSeverityIncident.setOnItemClickListener { parent, view, position, id ->
+            severity = parent.getItemAtPosition(position).toString()
+        }
     }
 
     private fun setupSpinners(){
@@ -91,5 +108,21 @@ class CreateTicketFragment: Fragment() {
 
         val severityAdapter = ArrayAdapter.createFromResource(requireContext(), R.array.severity_incident, R.layout.drop_down_item)
         binding.autSeverityIncident.setAdapter(severityAdapter)
+    }
+
+    private fun showStatusProgressBar() {
+        viewModel.loading.observe(viewLifecycleOwner){ status->
+            if (status){
+                binding.progressBar.show()
+            } else {
+                binding.progressBar.hide()
+            }
+        }
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -5,22 +5,25 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developerscracks.ticketsappretrofit.data.network.model.TicketDTO
-import com.developerscracks.ticketsappretrofit.data.network.model.toTicketDTO
-import com.developerscracks.ticketsappretrofit.domain.entities.Ticket
 import com.developerscracks.ticketsappretrofit.domain.usecases.TicketUseCases
 import com.developerscracks.ticketsappretrofit.domain.utils.TicketResult
-import com.developerscracks.ticketsappretrofit.ui.mapper.TicketUI
+import com.developerscracks.ticketsappretrofit.ui.mapper.toTicket
+import com.developerscracks.ticketsappretrofit.ui.model.TicketUI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.random.Random
 
 @HiltViewModel
 class CreateTicketViewModel @Inject constructor(private val ticketUseCases: TicketUseCases): ViewModel() {
 
-    private var _ticket:MutableLiveData<TicketDTO> = MutableLiveData()
-    val ticket: LiveData<TicketDTO> = _ticket
+    private var _ticket:MutableLiveData<TicketUI?> = MutableLiveData()
+    val ticket: LiveData<TicketUI?> = _ticket
+
+    private val _loading: MutableLiveData<Boolean> = MutableLiveData()
+    val loading: LiveData<Boolean> = _loading
+
+    private val _error: MutableLiveData<String> = MutableLiveData()
+    val error: LiveData<String> = _error
 
 
     fun createNewTicket(
@@ -33,9 +36,7 @@ class CreateTicketViewModel @Inject constructor(private val ticketUseCases: Tick
         description: String
     ){
 
-        val ticket = TicketDTO(
-            id = null,
-            number = "numero",
+        val ticket = TicketUI(
             title = title,
             date = "fecha",
             status = "NEW",
@@ -44,25 +45,24 @@ class CreateTicketViewModel @Inject constructor(private val ticketUseCases: Tick
             incident = incident,
             severity = severity,
             version = version,
-            description = description,
-            image1 = "",
-            image2 = "",
-            image3 = ""
-
+            description = description
         )
 
         viewModelScope.launch {
-            val result = ticketUseCases.createTicketUseCase(ticket)
+            _loading.value = true
+            val result = ticketUseCases.createTicketUseCase(ticket.toTicket())
 
             when(result){
                 is TicketResult.Success ->{
-                    _ticket.value = result.data.toTicketDTO()
+                    _ticket.value = result.data
                 }
 
                 is TicketResult.Error ->{
-                    Log.d("TAG", "createNewTicket: Error desconocido")
+                    _error.value = result.error.message
                 }
             }
+
+            _loading.value = false
         }
     }
 }
