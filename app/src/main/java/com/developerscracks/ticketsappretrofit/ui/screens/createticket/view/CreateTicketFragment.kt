@@ -28,9 +28,9 @@ class CreateTicketFragment: Fragment() {
 
     lateinit var title: String
     lateinit var name: String
-    lateinit var team: String
-    lateinit var incident: String
-    lateinit var severity:String
+    var team: String = ""
+    var incident: String = ""
+    var severity: String = ""
     lateinit var version: String
     lateinit var description: String
 
@@ -43,13 +43,14 @@ class CreateTicketFragment: Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupSpinners()
         setItemSpinners()
         showStatusProgressBar()
-        createTicket()
+        binding.btnCreateTicket.setOnClickListener { createTicket() }
         isTicketCreated()
 
     }
@@ -63,8 +64,11 @@ class CreateTicketFragment: Fragment() {
                     etTitleTicketInput.setText("")
                     etNameInChargeInput.setText("")
                     spinnerResponsibleTeam.editText?.setText("")
+                    team = ""
                     spinnerIncidentType.editText?.setText("")
+                    incident = ""
                     spinnerSeverityIncident.editText?.setText("")
+                    severity = ""
                     etVersionSoftwareInput.setText("")
                     etDescriptionProblemInput.setText("")
                 }
@@ -78,7 +82,7 @@ class CreateTicketFragment: Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createTicket(){
-        binding.btnCreateTicket.setOnClickListener {
+        if (validateForm()){
             title = binding.etTitleTicketInput.text.toString()
             name = binding.etNameInChargeInput.text.toString()
             version = binding.etVersionSoftwareInput.text.toString()
@@ -86,6 +90,62 @@ class CreateTicketFragment: Fragment() {
 
             viewModel.createNewTicket(title,name,team,incident,severity,version,description)
         }
+    }
+
+    private fun validateForm(): Boolean {
+        var isValid = true
+        with(binding) {
+
+            if (etTitleTicketInput.text.toString().isBlank()){
+                isValid = false
+                etTitleTicketInputLayaout.error = getString(R.string.form_required_field)
+            }else{
+                etTitleTicketInputLayaout.error = null
+            }
+
+            if (etNameInChargeInput.text.toString().isBlank()){
+                isValid = false
+                etNameInChargeInputLayaout.error = getString(R.string.form_required_field)
+            }else{
+                etNameInChargeInputLayaout.error = null
+            }
+
+            if(team.isBlank()){
+                isValid = false
+                spinnerResponsibleTeam.error = getString(R.string.form_required_field)
+            }else{
+                spinnerResponsibleTeam.error = null
+            }
+
+            if(incident.isBlank()){
+                isValid = false
+                spinnerIncidentType.error = getString(R.string.form_required_field)
+            }else{
+                spinnerIncidentType.error = null
+            }
+
+            if (severity.isBlank()){
+                isValid = false
+                spinnerSeverityIncident.error = getString(R.string.form_required_field)
+            }else{
+                spinnerSeverityIncident.error = null
+            }
+
+            if (etVersionSoftwareInput.text.toString().isBlank()){
+                isValid = false
+                etVersionSoftwareInputLayaout.error = getString(R.string.form_required_field)
+            }else{
+                etVersionSoftwareInputLayaout.error = null
+            }
+
+            if (etDescriptionProblemInput.text.toString().isBlank()){
+                isValid = false
+                etDescriptionProblemInputLayaout.error = getString(R.string.form_required_field)
+            }else{
+                etDescriptionProblemInputLayaout.error = null
+            }
+        }
+        return isValid
     }
 
     private fun setItemSpinners(){
