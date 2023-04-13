@@ -1,11 +1,13 @@
 package com.developerscracks.ticketsappretrofit.ui.screens.createticket.view
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.developerscracks.ticketsappretrofit.R
@@ -74,6 +76,7 @@ class CreateTicketFragment: Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun createTicket(){
         binding.btnCreateTicket.setOnClickListener {
             title = binding.etTitleTicketInput.text.toString()

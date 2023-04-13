@@ -1,6 +1,7 @@
 package com.developerscracks.ticketsappretrofit.ui.screens.createticket.viewmodel
 
-import android.util.Log
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,8 +10,10 @@ import com.developerscracks.ticketsappretrofit.domain.usecases.TicketUseCases
 import com.developerscracks.ticketsappretrofit.domain.utils.TicketResult
 import com.developerscracks.ticketsappretrofit.ui.mapper.toTicket
 import com.developerscracks.ticketsappretrofit.ui.model.TicketUI
+import com.developerscracks.ticketsappretrofit.ui.utils.Constants.TICKET_STATUS_NEW
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,6 +29,7 @@ class CreateTicketViewModel @Inject constructor(private val ticketUseCases: Tick
     val error: LiveData<String> = _error
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun createNewTicket(
         title: String,
         name: String,
@@ -38,8 +42,8 @@ class CreateTicketViewModel @Inject constructor(private val ticketUseCases: Tick
 
         val ticket = TicketUI(
             title = title,
-            date = "fecha",
-            status = "NEW",
+            date = LocalDate.now(),
+            status = TICKET_STATUS_NEW,
             person = name,
             team = team,
             incident = incident,
