@@ -9,10 +9,10 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.developerscracks.ticketsappretrofit.core.hide
-import com.developerscracks.ticketsappretrofit.core.show
 import com.developerscracks.ticketsappretrofit.databinding.FragmentHomeBinding
 import com.developerscracks.ticketsappretrofit.ui.screens.home.viewmodel.HomeViewModel
+import com.developerscracks.ticketsappretrofit.ui.utils.hide
+import com.developerscracks.ticketsappretrofit.ui.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

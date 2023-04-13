@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.developerscracks.ticketsappretrofit.core.hide
-import com.developerscracks.ticketsappretrofit.core.show
 import com.developerscracks.ticketsappretrofit.databinding.FragmentTicketDetailBinding
 import com.developerscracks.ticketsappretrofit.ui.screens.detailticket.viewmodel.TicketDetailViewModel
+import com.developerscracks.ticketsappretrofit.ui.utils.hide
+import com.developerscracks.ticketsappretrofit.ui.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

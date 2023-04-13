@@ -11,11 +11,11 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.developerscracks.ticketsappretrofit.R
-import com.developerscracks.ticketsappretrofit.core.hide
-import com.developerscracks.ticketsappretrofit.core.show
 import com.developerscracks.ticketsappretrofit.databinding.FragmentCreateTicketBinding
 import com.developerscracks.ticketsappretrofit.ui.screens.createticket.viewmodel.CreateTicketViewModel
 import com.developerscracks.ticketsappretrofit.ui.utils.Constants.TICKET_CREATE_SUCCESFULL
+import com.developerscracks.ticketsappretrofit.ui.utils.hide
+import com.developerscracks.ticketsappretrofit.ui.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
