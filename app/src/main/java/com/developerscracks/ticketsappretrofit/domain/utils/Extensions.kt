@@ -1,18 +1,9 @@
-package com.developerscracks.ticketsappretrofit.core
+package com.developerscracks.ticketsappretrofit.domain.utils
 
 import android.os.Build
-import android.view.View
 import androidx.annotation.RequiresApi
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-
-fun View.hide() {
-    this.visibility = View.GONE
-}
-
-fun View.show() {
-    this.visibility = View.VISIBLE
-}
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun String.toLocalDate(): LocalDate {
